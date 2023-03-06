@@ -1,0 +1,14 @@
+#
+# Econ
+#
+main: com.watsonllc.econ.Economy
+
+physicalCurrency:
+  material: 'PAPER'
+  name: '&7Cash Voucher'
+
+bank:
+  defaultBalance: 1000000
+  defaultTaxRate: 0.05
+  defaultCurrency: $
+  taxEnabled: false

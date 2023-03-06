@@ -1,0 +1,13 @@
+name: Economy
+author: WatsonLLC
+description: Economy plugin
+version: 0.0.1
+api-version: 1.19
+main: com.watsonllc.econ.Economy
+commands:
+  balance:
+  coin:
+  deposit:
+  withdraw:
+  worth:
+  refresh:

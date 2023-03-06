@@ -1,0 +1,8 @@
+Bank:
+  balance:
+  taxRate:
+  accounts:
+    UNIQUE_ID:
+      user: 
+      balance: 
+      taxExempt:
