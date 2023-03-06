@@ -4,9 +4,10 @@
 
 balance: '&7Balance: &a#CURRENCY##BALANCE#'
 balanceNeg: '&7Balance: &c$#CURRENCY##BALANCE#'
-deposit: '&7You deposited: &a#CURRENCY#'
+deposit: '&7You deposited: &a#CURRENCY##DEPOSIT#'
 loanPayment: '&7You paid: &c#CURRENCY#'
 loanWithdraw: '&7You took out a loan for: &c#CURRENCY#'
-withdraw: '&You withdrew: &c#CURRENCY#'
+withdraw: '&7You withdrew: &c#CURRENCY##WITHDRAW#'
+taxesPaid: '&7You paid #CURRENCY##TAX# in taxes!'
 invalid-args: '&cInvalid command syntax!'
 no-permission: '&cYou don\'t have permission to do that.'

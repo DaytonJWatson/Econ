@@ -50,10 +50,11 @@ public class Messages {
 	private static void addDefaults() {
 		set("balance", "&7Balance: &a#CURRENCY##BALANCE#");
 		set("balanceNeg", "&7Balance: &c#CURRENCY##BALANCE#");
-		set("deposit", "&7You deposited: &a#CURRENCY#");
+		set("deposit", "&7You deposited: &a#CURRENCY##DEPOSIT#");
 		set("loadPayment", "&7You paid: &c#CURRENCY#");
 		set("loanWithdraw", "&7You took out a loan for: &c#CURRENCY#");
-		set("withdraw", "&You withdrew: &c#CURRENCY#");
+		set("taxesPaid", "&7You paid #CURRENCY##TAX# in taxes!");
+		set("withdraw", "&7You withdrew: &c#CURRENCY##WITHDRAW#");
 		set("invalid-args", "&cInvalid command syntax!");
 		set("no-permission", "&cYou don\\'t have permission to do that.");
 	}

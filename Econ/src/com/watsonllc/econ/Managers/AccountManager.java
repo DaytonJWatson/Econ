@@ -12,6 +12,11 @@ public class AccountManager {
 	char currency;
 	double balance;
 	boolean taxExempt;
+	
+	//placeholders
+	double lastWithdraw;
+	double lastDeposit;
+	double lastTaxPaid;
 
 	public AccountManager(Player player) {
 		this.player = player;
@@ -67,6 +72,8 @@ public class AccountManager {
 		this.balance = getBalance();
 		double newBal = balance + net;
 		Bank.set(dataPath + ".balance", round(newBal));
+		setLastDeposit(round(net));
+		setLastTax(taxMath(amount));
 	}
 	
 	public void payBank(double amount) {
@@ -79,6 +86,7 @@ public class AccountManager {
 		this.balance = getBalance();
 		double newBal = balance + amount;
 		Bank.set(dataPath + ".balance", round(newBal));
+		setLastDeposit(round(newBal));
 	}
 
 	public void withdraw(double amount) {
@@ -86,6 +94,7 @@ public class AccountManager {
 		this.balance = getBalance();
 		double newBal = balance - amount;
 		Bank.set(dataPath + ".balance", round(newBal));
+		setLastWithdraw(round(newBal));
 	}
 
 	public void setBalance(double balance) {
@@ -111,13 +120,40 @@ public class AccountManager {
 		return taxExempt;
 	}
 	
+	public void setLastWithdraw(double amount) {
+		this.lastWithdraw = amount;
+	}
+	
+	public void setLastDeposit(double amount) {
+		this.lastWithdraw = amount;
+	}
+	
+	public void setLastTax(double amount) {
+		this.lastTaxPaid = amount;
+	}
+	
+	public double getLastWithdraw() {
+		return lastWithdraw;
+	}
+	
+	public double getLastDeposit() {
+		return lastDeposit;
+	}
+	
+	public double getLastTaxPaid() {
+		return lastTaxPaid;
+	}
+	
 	public String placeholders(String message) {
 		String placeholder;
 		placeholder = message;
 		placeholder = placeholder.replace("#BALANCE#", String.valueOf(getBalance()));
 		placeholder = placeholder.replace("#CURRENCY#", String.valueOf(getCurrency()));
 		placeholder = placeholder.replace("#OWNER#", player.getName());
-		placeholder = placeholder.replace("#AMOUNT#", "");
+		placeholder = placeholder.replace("#TAX#", String.valueOf(getLastTaxPaid()));
+		placeholder = placeholder.replace("#WITHDRAW#", String.valueOf(getLastWithdraw()));
+		placeholder = placeholder.replace("#DEPOSIT#", String.valueOf(getLastDeposit()));
+		
 		return placeholder;
 	}
 	
@@ -130,10 +166,34 @@ public class AccountManager {
 	public static boolean isTaxCollected() {
 		return Config.getBoolean("bank.taxEnabled");
 	}
+	
+	public static boolean isTaxCollected(Player player) {
+		if(isTaxExempt(player)) return false;
+		if(isTaxCollected() && isTaxExempt(player)) return false;
+		if(isTaxCollected() && !isTaxExempt(player)) return true;
+		return Config.getBoolean("bank.taxEnabled");
+	}
 
 	public static boolean isTaxExempt(Player player) {
 		AccountManager account = new AccountManager(player);
 		return account.getTaxExempt();
+	}
+	
+	public static double getWithdrawAmount(Player player) {
+		AccountManager account = new AccountManager(player);
+		return account.getLastWithdraw();
+	}
+	
+	public static double getDepositAmount(Player player) {
+		AccountManager account = new AccountManager(player);
+		return account.getLastDeposit();
+	}
+	
+	public static void collectTax(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
+		if(isTaxCollected() && !isTaxExempt(player)) {
+			account.depositWithTax(amount);
+		} else return;
 	}
 	
 	public static double balance(Player player) {

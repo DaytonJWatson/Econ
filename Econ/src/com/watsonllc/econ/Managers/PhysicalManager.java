@@ -44,19 +44,14 @@ public class PhysicalManager {
 		ItemStack hand = player.getInventory().getItemInMainHand();
 		AccountManager bm = new AccountManager(player);
 		double deposited;
-		double tax;
 		deposited = PhysicalManager.getCoinWorth(hand);
-		tax = AccountManager.taxMath(deposited);
 
 		if (PhysicalManager.isHoldingCoin(hand)) {
-			hand.setType(Material.AIR);
+			hand.setAmount(0); // clear the item
 			if (AccountManager.isTaxCollected() && !AccountManager.isTaxExempt(player)) {
-				player.sendMessage("You deposited: $" + deposited);
-				player.sendMessage("You paid $" + tax + " in taxes!");
 				bm.depositWithTax(deposited);
 			} else {
 				bm.deposit(deposited);
-				player.sendMessage("You deposited: $" + deposited);
 			}
 		} else return;
 	}
