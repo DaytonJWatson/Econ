@@ -132,22 +132,50 @@ public class AccountManager {
 	}
 
 	public static boolean isTaxExempt(Player player) {
-		AccountManager bank = new AccountManager(player);
-		return bank.getTaxExempt();
+		AccountManager account = new AccountManager(player);
+		return account.getTaxExempt();
 	}
 	
 	public static double balance(Player player) {
-		AccountManager bank = new AccountManager(player);
-		return bank.getBalance();
+		AccountManager account = new AccountManager(player);
+		return account.getBalance();
 	}
 	
-	public boolean hasEnough(Player player, double amount) {
-		AccountManager bank = new AccountManager(player);
+	public static boolean hasNegativeBalance(Player player) {
+		AccountManager account = new AccountManager(player);
+		if(account.getBalance() < 0) {
+			return true;
+		} else return false;
+	}
+	
+	public static boolean hasEnough(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
 		double balance;
-		balance = bank.getBalance();
+		balance = account.getBalance();
 		if (balance < amount)
 			return false;
 		return true;
+	}
+	
+	public static void transferFromBank(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
+		BankManager bank = new BankManager();
+		account.deposit(amount);
+		bank.withdraw(amount);
+	}
+	
+	public static void transferToBank(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
+		BankManager bank = new BankManager();
+		account.withdraw(amount);
+		bank.deposit(amount);
+	}
+	
+	public static void transfer(Player from, Player to, double amount) {
+		AccountManager fromAccount = new AccountManager(from);
+		AccountManager toAccount = new AccountManager(to);
+		fromAccount.withdraw(amount);
+		toAccount.deposit(amount);
 	}
 	
 	public static double netMath(double gross) {

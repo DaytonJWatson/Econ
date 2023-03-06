@@ -42,15 +42,14 @@ public class PhysicalManager {
 
 	public static void cashOutCoin(Player player) {
 		ItemStack hand = player.getInventory().getItemInMainHand();
-		ItemStack air = new ItemStack(Material.AIR);
 		AccountManager bm = new AccountManager(player);
 		double deposited;
 		double tax;
 		deposited = PhysicalManager.getCoinWorth(hand);
 		tax = AccountManager.taxMath(deposited);
 
-		if (PhysicalManager.isCoin(hand)) {
-			player.getInventory().setItemInMainHand(air);
+		if (PhysicalManager.isHoldingCoin(hand)) {
+			hand.setType(Material.AIR);
 			if (AccountManager.isTaxCollected() && !AccountManager.isTaxExempt(player)) {
 				player.sendMessage("You deposited: $" + deposited);
 				player.sendMessage("You paid $" + tax + " in taxes!");
@@ -68,7 +67,7 @@ public class PhysicalManager {
 		return worth;
 	}
 
-	public static boolean isCoin(ItemStack item) {
+	public static boolean isHoldingCoin(ItemStack item) {
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null)
 			return false;

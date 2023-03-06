@@ -16,7 +16,7 @@ public class Worth implements CommandExecutor {
 		double worth;
 		
 		if(cmd.getName().equalsIgnoreCase("worth") && sender.hasPermission("")) {
-			if(PhysicalManager.isCoin(item)) {
+			if(PhysicalManager.isHoldingCoin(item)) {
 				worth = PhysicalManager.getCoinWorth(item);
 				player.sendMessage("That coin is worth $" + worth);
 			} else {

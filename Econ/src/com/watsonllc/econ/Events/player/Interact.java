@@ -16,7 +16,7 @@ public class Interact implements Listener {
 		Player player = event.getPlayer();
 		ItemStack hand = player.getInventory().getItemInMainHand();
 
-		if(PhysicalManager.isCoin(hand)) {
+		if(PhysicalManager.isHoldingCoin(hand)) {
 			if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 				PhysicalManager.cashOutCoin(player);
 			}

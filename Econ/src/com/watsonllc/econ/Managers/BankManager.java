@@ -56,4 +56,48 @@ public class BankManager {
 	private static double round(double num) {
 		return Math.round(num * 100.0) / 100.0;
 	}
+	
+	// api static section
+	
+	public static double balance(Player player) {
+		BankManager bank = new BankManager();
+		return bank.getBalance();
+	}
+	
+	public static boolean hasNegativeBalance() {
+		BankManager bank = new BankManager();
+		if(bank.getBalance() < 0) {
+			return true;
+		} else return false;
+	}
+	
+	public static boolean hasEnough(double amount) {
+		BankManager bank = new BankManager();
+		double balance;
+		balance = bank.getBalance();
+		if (balance < amount)
+			return false;
+		return true;
+	}
+	
+	public static void transferFromBank(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
+		BankManager bank = new BankManager();
+		account.deposit(amount);
+		bank.withdraw(amount);
+	}
+	
+	public static void transferToBank(Player player, double amount) {
+		AccountManager account = new AccountManager(player);
+		BankManager bank = new BankManager();
+		account.withdraw(amount);
+		bank.deposit(amount);
+	}
+
+	public static void transfer(Player player, double amount) {
+		BankManager bank = new BankManager();
+		AccountManager toAccount = new AccountManager(player);
+		bank.withdraw(amount);
+		toAccount.deposit(amount);
+	}
 }
