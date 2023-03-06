@@ -7,6 +7,7 @@ import com.watsonllc.econ.Config.Config;
 import com.watsonllc.econ.Events.Events;
 
 public class Economy extends JavaPlugin {
+
 	public static Economy instance;
 	
 	@Override
